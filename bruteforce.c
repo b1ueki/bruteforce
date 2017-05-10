@@ -1,6 +1,8 @@
 #include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
 
-#define PASS_LENGTH 6
+#define PASS_LENGTH 4
 
 void bruteImpl(char*, int, int);
 void bruteSequential(int);
@@ -9,10 +11,13 @@ static const char alphabet[] = "abcdefghijklmnopqrstuvwxyz"
                                "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                                "0123456789";
 static const int alphabetSize = sizeof(alphabet) - 1;
+char pass[];
 
 int main(void)
 {
-  bruteSequential(6);
+  printf("please input password(up to 4 characters) >");
+  scanf("%s",pass);
+  bruteSequential(PASS_LENGTH);
   return 0;
 }
 
@@ -22,7 +27,13 @@ void bruteImpl(char* str, int index, int maxDepth)
   {
     str[index] = alphabet[i];
 
-    if (index == maxDepth - 1) printf("%s\n", str);
+    if (index == maxDepth - 1){
+      printf("%s\n", str);
+      if(!strcmp(str, pass)){
+        printf("password is [%s]\n",str);
+        exit(1);
+      }
+    }
     else bruteImpl(str, index + 1, maxDepth);
   }
 }
